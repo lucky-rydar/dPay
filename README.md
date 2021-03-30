@@ -1,48 +1,50 @@
-DB:
-	user:
-		id (unique)
-		email
-		phone
-		username (unique)
-		password
-		token
+### Functionality:
+
+1. DB:
+	1. user:
+		1. id (unique)
+		2. email
+		3. phone
+		4. username (unique)
+		5. password
+		6. token
 		
-	card:
-		id (unique)
-		owner_id
-		is_default
-		name
-		card_number (unique)
-		cvv
-		exp_month
-		exp_year
+	2. card:
+		1. id (unique)
+		2. owner_id
+		3. is_default
+		4. name
+		5. card_number (unique)
+		6. cvv
+		7. exp_month
+		8. exp_year
 		
-	transaction:
-		id (unique)
-		date_time
-		from_card
-		to_card
-		from_user
-		to_user
-		amount
+	3. transaction:
+		1. id (unique)
+		2. date_time
+		3. from_card
+		4. to_card
+		5. from_user
+		6. to_user
+		7. amount
 		
 
-API:
-	user_controller:
-		register/{phone}/{email}/{username}/{password}
-		login/{username}/{password}
+2. API:
+	1. user_controller:
+		1. register/{phone}/{email}/{username}/{password}
+		2. login/{username}/{password}
 		
-	card_controller:
-		add/{token}/{number}/{month_exp}/{year_exp}/{cvv}
-		remove/{token}/{number}
-		cards/{token}
-		rename/{token}/{card_number}/{name}
-		set_default/{card_id}
-		get_cvv/{card_id}
-		get_date/{card_id}
+	2. card_controller:
+		1. add/{token}/{number}/{month_exp}/{year_exp}/{cvv}
+		2. remove/{token}/{number}
+		3. cards/{token}
+		4. rename/{token}/{card_number}/{name}
+		5. set_default/{card_id}
+		6. get_cvv/{card_id}
+		7. get_date/{card_id}
 		
-	transaction_controller:
-		send/by_card_num/{token}/{from_card_id}/{to_card_num}/{amount}
-		send/by_card_id/{token}/{from_card_id}/{to_card_id}/{amount}
+	3. transaction_controller:
+		1. send/by_card_num/{token}/{from_card_id}/{to_card_num}/{amount}
+		2. send/by_card_id/{token}/{from_card_id}/{to_card_id}/{amount}
 		
 		
