@@ -27,7 +27,7 @@
 		5. from_user
 		6. to_user
 		7. amount
-		
+		8. currency
 
 2. API:
 	1. user_controller:
@@ -44,7 +44,7 @@
 		7. get_date/{card_id}
 		
 	3. transaction_controller:
-		1. send/by_card_num/{token}/{from_card_id}/{to_card_num}/{amount}
-		2. send/by_card_id/{token}/{from_card_id}/{to_card_id}/{amount}
+		1. send/by_card_num/{token}/{from_card_id}/{to_card_num}/{amount}/{currency}
+		2. send/by_card_id/{token}/{from_card_id}/{to_card_id}/{amount}/{currency}
 		
 		
