@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using API.Database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,14 @@ namespace API.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
+        CustomDBContext db;
+
+        public TransactionController(CustomDBContext db)
+        {
+            this.db = db;
+            this.db.Database.EnsureCreated();
+        }
+
         [HttpGet("test")]
         public Transaction Test()
         {

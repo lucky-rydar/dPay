@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.Database;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,14 @@ namespace API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        CustomDBContext db;
+
+        public UserController(CustomDBContext db)
+        {
+            this.db = db;
+            this.db.Database.EnsureCreated();
+        }
+
         [HttpGet("test")]
         public User Test()
         {

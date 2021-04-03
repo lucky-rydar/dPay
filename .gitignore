@@ -2,3 +2,5 @@
 /API/.vs/
 /API/API/bin
 /API/API/obj
+
+*.db
