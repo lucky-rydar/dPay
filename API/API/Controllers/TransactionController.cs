@@ -19,21 +19,5 @@ namespace API.Controllers
             this.db = db;
             this.db.Database.EnsureCreated();
         }
-
-        [HttpGet("test")]
-        public Transaction Test()
-        {
-            return new Transaction()
-            {
-                Id = 0,
-                DateTime = "03.04.2021 13:36",
-                FromUser = "User1",
-                ToUser = "User2",
-                FromCard = "1234********4321",
-                ToCard = "4321********1234",
-                Currency = "USD",
-                Amount = 1000
-            };
-        }
     }
 }

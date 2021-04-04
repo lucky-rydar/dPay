@@ -19,11 +19,5 @@ namespace API.Controllers
             this.db = db;
             this.db.Database.EnsureCreated();
         }
-
-        [HttpGet("test")]
-        public Card Test()
-        {
-            return new Card() { Id = 0, OwnerId = 0, CardNumber = "1234000000001234", CVV = "111", ExpMonth = "11", ExpYear = "30", IsDefault = false, Name = "First Card"};
-        }
     }
 }
