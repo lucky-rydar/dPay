@@ -2,5 +2,8 @@
 /API/.vs/
 /API/API/bin
 /API/API/obj
+/API/TestResults/
+/API/API.Tests/bin/
+/API/API.Tests/obj/
 
 *.db
