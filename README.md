@@ -33,15 +33,17 @@
 	1. user_controller:
 		1. register/{phone}/{email}/{username}/{password}
 		2. login/{username}/{password}
+		3. change_phone/{token}/{new_phone}
 		
 	2. card_controller:
 		1. add/{token}/{number}/{month_exp}/{year_exp}/{cvv}
 		2. remove/{token}/{number}
 		3. cards/{token}
-		4. rename/{token}/{card_number}/{name}
+		4. rename/{token}/{card_id}/{new_name}
 		5. set_default/{card_id}
 		6. get_cvv/{card_id}
 		7. get_date/{card_id}
+		8. get_num/{card_id}
 		
 	3. transaction_controller:
 		1. send/by_card_num/{token}/{from_card_id}/{to_card_num}/{amount}/{currency}
