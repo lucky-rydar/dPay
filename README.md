@@ -31,7 +31,7 @@
 
 2. API:
 	1. user_controller:
-		1. register/{phone}/{email}/{username}/{password}
+		1. register/{username}/{email}/{phone}/{password}
 		2. login/{username}/{password}
 		3. change_phone/{token}/{new_phone}
 		
@@ -48,5 +48,19 @@
 	3. transaction_controller:
 		1. send/by_card_num/{token}/{from_card_id}/{to_card_num}/{amount}/{currency}
 		2. send/by_card_id/{token}/{from_card_id}/{to_card_id}/{amount}/{currency}
+		
+3. Frontend
+	1. login/register menu
+	2. main_menu:
+		1. settings
+		2. profile
+		3. list_of_cards
+		4. send_money
+		
+		
+		
+		
+		
+		
 		
 		
