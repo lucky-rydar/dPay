@@ -35,8 +35,8 @@ Page {
 
     Button{
         id: turnRegMenuBtn
-        text: "New Accaount"
-
+        text: "New account"
+        width: passwordField.width/2
         anchors.right: loginBtn.left
         anchors.top: loginBtn.top
 
