@@ -30,6 +30,7 @@ Page {
         placeholderText: "password"
         anchors.top: phoneField.bottom
         anchors.horizontalCenter: usernameField.horizontalCenter
+        echoMode: "Password"
     }
 
     TextField{
@@ -37,6 +38,7 @@ Page {
         placeholderText: "password"
         anchors.top: password1.bottom
         anchors.horizontalCenter: usernameField.horizontalCenter
+        echoMode: "Password"
     }
 
     Button{
