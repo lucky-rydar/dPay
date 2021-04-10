@@ -46,6 +46,19 @@ Page {
 
     }
 
+    Text{
+        id: loginStatus
+        height: usernameField.height
+        width: usernameField.width
+        font.pointSize: turnRegMenuBtn.font.pointSize
+        text: "status" // make empty on release
+        verticalAlignment: Text.AlignVCenter
+        anchors.left: turnRegMenuBtn.left
+        anchors.top: turnRegMenuBtn.bottom
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
+    }
+
 
 
 }

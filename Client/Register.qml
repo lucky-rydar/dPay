@@ -7,7 +7,7 @@ Page {
         id: usernameField
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -1*parent.height/8
+        anchors.verticalCenterOffset: -1*parent.height/6
         placeholderText: "username"
     }
 
@@ -51,6 +51,7 @@ Page {
     Text{
         id: registrationStatus
         height: createAccBtn.height
+        width: createAccBtn.width
         font.pointSize: createAccBtn.font.pointSize
         text: "status" // make empty on release
         verticalAlignment: Text.AlignVCenter
