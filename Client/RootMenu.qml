@@ -15,17 +15,14 @@ Item {
 
         Register{
             id: regPage
-            //anchors.fill: parent
         }
 
         Login{
             id: logPage
-            //anchors.fill: parent
         }
 
         MainMenu{
             id: mainPage
-            //anchors.fill: parent
         }
     }
 }

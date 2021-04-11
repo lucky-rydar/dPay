@@ -19,7 +19,7 @@ namespace API.Tests
                 CustomDBContext db = new CustomDBContext();
                 db.Database.EnsureCreated();
 
-                var card = new API.Card()
+                var card = new API.Database.Card()
                 {
                     Id = -1,
                     OwnerId = 1,
