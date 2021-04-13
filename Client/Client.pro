@@ -1,4 +1,4 @@
-QT += quick
+QT += quick network
 
 CONFIG += c++11
 
@@ -7,6 +7,9 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        apiwrapper/apiwrapper.cpp \
+        apiwrapper/loginstatus.cpp \
+        apiwrapper/registerstatus.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -28,3 +31,8 @@ contains(ANDROID_TARGET_ARCH,) {
 }
 
 ANDROID_ABIS = armeabi-v7a
+
+HEADERS += \
+    apiwrapper/apiwrapper.h \
+    apiwrapper/loginstatus.h \
+    apiwrapper/registerstatus.h

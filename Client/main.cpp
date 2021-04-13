@@ -1,11 +1,18 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <apiwrapper/apiwrapper.h>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+
+    qmlRegisterType<ApiWrapper>("api.wrapper", 2, 0, "ApiWrapper");
+
+    // here declearing all additional structs to use them in qml
+    qRegisterMetaType<RegisterStatus>();
+    qRegisterMetaType<LoginStatus>();
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));

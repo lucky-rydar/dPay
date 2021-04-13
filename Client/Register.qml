@@ -48,6 +48,10 @@ Page {
         anchors.horizontalCenter: password2.horizontalCenter
         width: usernameField.width
         height: password2.height
+
+        onClicked: {
+
+        }
     }
 
     Text{
