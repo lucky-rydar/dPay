@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <apiwrapper/apiwrapper.h>
+#include <clientuserdata.h>
 
 int main(int argc, char *argv[])
 {
@@ -9,6 +10,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<ApiWrapper>("api.wrapper", 2, 0, "ApiWrapper");
+    qmlRegisterType<ClientUserData>("cpp.modules", 2, 0, "ClientUserData");
 
     // here declearing all additional structs to use them in qml
     qRegisterMetaType<RegisterStatus>();

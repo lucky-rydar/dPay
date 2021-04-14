@@ -23,6 +23,8 @@ public:
     // transaction
 
 private:
+    QJsonDocument makeRequest(QString url);
+
     QString baseUrl;
 
 signals:

@@ -29,7 +29,19 @@ Page {
         width: passwordField.width/2
 
         onClicked: {
-            // TODO
+            var loginStatus = api.login(usernameField.text, passwordField.text)
+            if(loginStatus.logined)
+            {
+                // so we logined
+                console.log(loginStatus)
+                //TODO: turn main menu and save received data
+
+                loginStatus.text = ""
+            }
+            else
+            {
+                loginStatus.text = "can't login"
+            }
         }
     }
 
@@ -41,7 +53,10 @@ Page {
         anchors.top: loginBtn.top
 
         onClicked:{
+            usernameField.text = ""
+            passwordField.text = ""
             rootSwipeView.currentIndex = 0
+
         }
 
     }
@@ -51,7 +66,7 @@ Page {
         height: usernameField.height
         width: usernameField.width
         font.pointSize: turnRegMenuBtn.font.pointSize
-        text: "status" // make empty on release
+        //text: "status" // make empty on release
         verticalAlignment: Text.AlignVCenter
         anchors.left: turnRegMenuBtn.left
         anchors.top: turnRegMenuBtn.bottom

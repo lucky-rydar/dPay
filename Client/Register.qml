@@ -50,7 +50,36 @@ Page {
         height: password2.height
 
         onClicked: {
+            if(password1.text == password2.text
+                    && password1.text != ""
+                    || password2.text != "")
+            {
+                // TODO: add some additional checks of password1
 
+                var status = api.registration(usernameField.text,
+                                 emailField.text,
+                                 phoneField.text,
+                                 password1.text)
+                if(!status.registered)
+                {
+                    registrationStatus.text = "not registered"
+                }
+                else
+                {
+                    registrationStatus.text = ""
+                    usernameField.text = ""
+                    emailField.text = ""
+                    phoneField.text = ""
+                    password1.text = ""
+                    password2.text = ""
+
+                    rootSwipeView.currentIndex = 1
+                }
+            }
+            else
+            {
+                registrationStatus.text = "Passwords are not the same"
+            }
         }
     }
 
@@ -59,7 +88,7 @@ Page {
         height: createAccBtn.height
         width: createAccBtn.width
         font.pointSize: createAccBtn.font.pointSize
-        text: "status" // make empty on release
+        //text: "status" // make empty on release
         verticalAlignment: Text.AlignVCenter
         anchors.left: createAccBtn.left
         anchors.top: createAccBtn.bottom

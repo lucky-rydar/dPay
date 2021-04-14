@@ -10,6 +10,7 @@ SOURCES += \
         apiwrapper/apiwrapper.cpp \
         apiwrapper/loginstatus.cpp \
         apiwrapper/registerstatus.cpp \
+        clientuserdata.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -35,4 +36,5 @@ ANDROID_ABIS = armeabi-v7a
 HEADERS += \
     apiwrapper/apiwrapper.h \
     apiwrapper/loginstatus.h \
-    apiwrapper/registerstatus.h
+    apiwrapper/registerstatus.h \
+    clientuserdata.h
