@@ -29,18 +29,24 @@ Page {
         width: passwordField.width/2
 
         onClicked: {
-            var loginStatus = api.login(usernameField.text, passwordField.text)
-            if(loginStatus.logined)
+            var status = api.login(usernameField.text, passwordField.text)
+            console.log(status.logined)
+
+            if(status.logined)
             {
                 // so we logined
-                console.log(loginStatus)
+                console.log(status)
                 //TODO: turn main menu and save received data
 
+                loginStatus.text = ""
+                usernameField.text = ""
+                passwordField.text = ""
                 loginStatus.text = ""
             }
             else
             {
-                loginStatus.text = "can't login"
+                loginStatus.text = "cant login"
+                passwordField.text = ""
             }
         }
     }
@@ -67,6 +73,7 @@ Page {
         width: usernameField.width
         font.pointSize: turnRegMenuBtn.font.pointSize
         //text: "status" // make empty on release
+        text: ""
         verticalAlignment: Text.AlignVCenter
         anchors.left: turnRegMenuBtn.left
         anchors.top: turnRegMenuBtn.bottom
