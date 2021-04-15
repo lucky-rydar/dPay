@@ -4,9 +4,14 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Universal 2.12
 import QtQuick.Controls 2.12
 import api.wrapper 2.0
+import cpp.modules 2.0
 
 Item {
     id: rootMenu
+
+    ClientUserData{
+        id: clientUserData
+    }
 
     ApiWrapper{
         id: api

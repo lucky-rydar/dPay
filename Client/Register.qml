@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 
 Page {
     id: page
+
     TextField{
         id: usernameField
         anchors.horizontalCenter: parent.horizontalCenter
@@ -99,6 +100,6 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.6600000262260437;height:480;width:640}
+    D{i:0;formeditorZoom:0.6600000262260437}
 }
 ##^##*/
