@@ -43,6 +43,7 @@ namespace API.Controllers
                     IsDefault = doMakeDefault,
                     Name = ""
                 });
+                db.SaveChanges();
 
                 var cardId = db.Cards.Where(c => c.CardNumber == number && c.OwnerId == userId).First().Id;
 
