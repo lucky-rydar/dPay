@@ -37,7 +37,7 @@
 		
 	2. card_controller:
 		1. add/{token}/{number}/{month_exp}/{year_exp}/{cvv}
-		2. remove/{token}/{number}
+		2. remove/{token}/{card_id}
 		3. cards/{token}
 		4. rename/{token}/{card_id}/{new_name}
 		5. set_default/{card_id}
