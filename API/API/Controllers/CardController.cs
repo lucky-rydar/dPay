@@ -21,9 +21,12 @@ namespace API.Controllers
         }
 
         [HttpGet("add/{token}/{number}/{month_exp}/{year_exp}/{cvv}")]
-        AddCardStatus Add(string token, string number, string month_exp, string year_exp, string cvv)
+        public AddCardStatus Add(string token, string number, string month_exp, string year_exp, string cvv)
         {
             if (!Card.CardValid(number))
+                return new AddCardStatus() { Added = false, CardId = -1, Number = number };
+
+            if(db.Users.Where(u => u.Token == token).Count() == 0)
                 return new AddCardStatus() { Added = false, CardId = -1, Number = number };
 
             var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
@@ -56,7 +59,7 @@ namespace API.Controllers
         }
 
         [HttpGet("remove/{token}/{card_id}")]
-        bool Remove(string token, int card_id)
+        public bool Remove(string token, int card_id)
         {
             var owner_id = db.Users.Where(u => u.Token == token).First().Id;
             var card = db.Cards.Where(c => c.Id == card_id && c.OwnerId == owner_id).First();

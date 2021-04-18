@@ -7,8 +7,8 @@ namespace API
 {
     public class AddCardStatus
     {
-        public bool Added;
-        public int CardId;
-        public string Number;
+        public bool Added { get; set; }
+        public int CardId { get; set; }
+        public string Number { get; set; }
     }
 }
