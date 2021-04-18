@@ -25,7 +25,7 @@ namespace API.Controllers
         {
             string hashedPassword = Hasher.StringToSHA256(password);
             
-            if(db.Users.Where(u=>u.Username == username || u.Email == email || u.Phone == phone).ToList().Count == 0)
+            if(db.Users.Where(u=>u.Username == username || u.Email == email).ToList().Count == 0)
             {
                 // so we can register this user
                 string token = "";
