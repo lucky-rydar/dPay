@@ -40,10 +40,10 @@
 		2. remove/{token}/{card_id}
 		3. cards/{token}
 		4. rename/{token}/{card_id}/{new_name}
-		5. set_default/{card_id}
-		6. get_cvv/{card_id}
-		7. get_date/{card_id}
-		8. get_num/{card_id}
+		5. set_default/{token}/{card_id}
+		6. get_cvv/{token}/{card_id}
+		7. get_date/{token}/{card_id}
+		8. get_num/{token}/{card_id}
 		
 	3. transaction_controller:
 		1. send/by_card_num/{token}/{from_card_id}/{to_card_num}/{amount}/{currency}

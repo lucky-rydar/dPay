@@ -128,5 +128,31 @@ namespace API.Controllers
                 };
             }
         }
+
+        [HttpGet("set_default/{token}/{card_id}")]
+        public Dictionary<string, dynamic> SetDefault(string token, int card_id)
+        {
+            try
+            {
+                var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
+                var defaultCard = db.Cards.Where(c => c.OwnerId == userId && c.IsDefault).FirstOrDefault();
+                defaultCard.IsDefault = false;
+
+                var card = db.Cards.Where(c => c.OwnerId == userId && c.Id == card_id).FirstOrDefault();
+                card.IsDefault = true;
+
+                return new Dictionary<string, dynamic>()
+                {
+                    { "success", true }
+                };
+            }
+            catch(Exception e)
+            {
+                return new Dictionary<string, dynamic>()
+                {
+                    { "success", false }
+                };
+            }
+        }
     }
 }
