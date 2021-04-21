@@ -74,5 +74,33 @@ namespace API.Controllers
                 return false;
             }
         }
+
+        [HttpGet("cards/{token}")]
+        public List<Dictionary<string, dynamic>> Cards(string token)
+        {
+            List<Dictionary<string, dynamic>> res = new List<Dictionary<string, dynamic>>();
+
+            try
+            {
+                var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
+                var cards = db.Cards.Where(c => c.OwnerId == userId);
+                foreach(var card in cards)
+                {
+                    var cardInfo = new Dictionary<string, dynamic>();
+                    cardInfo.Add("name", card.Name);
+                    cardInfo.Add("number", card.CardNumber);
+                    cardInfo.Add("default", card.IsDefault);
+
+                    res.Add(cardInfo);
+                }
+            }
+            catch(Exception e)
+            {
+                res = new List<Dictionary<string, dynamic>>();
+                return res;
+            }
+
+            return res;
+        }
     }
 }
