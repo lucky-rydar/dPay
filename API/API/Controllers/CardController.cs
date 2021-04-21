@@ -89,6 +89,7 @@ namespace API.Controllers
                     var cardInfo = new Dictionary<string, dynamic>();
                     cardInfo.Add("name", card.Name);
                     cardInfo.Add("number", card.CardNumber);
+                    cardInfo.Add("id", card.Id);
                     cardInfo.Add("default", card.IsDefault);
 
                     res.Add(cardInfo);
@@ -101,6 +102,31 @@ namespace API.Controllers
             }
 
             return res;
+        }
+
+        [HttpGet("rename/{token}/{card_id}/{new_name}")]
+        public Dictionary<string, dynamic> Rename(string token, int card_id, string new_name)
+        {
+            try
+            {
+                var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
+
+                var card = db.Cards.Where(c => c.OwnerId == userId && c.Id == card_id).FirstOrDefault();
+                card.Name = new_name;
+                db.SaveChanges();
+
+                return new Dictionary<string, dynamic>() {
+                    { "renamed", true},
+                    { "new_name", card.Name}
+                };    
+            }
+            catch(Exception e)
+            {
+                return new Dictionary<string, dynamic>() { 
+                    { "renamed", false }, 
+                    { "new_name", "" } 
+                };
+            }
         }
     }
 }
