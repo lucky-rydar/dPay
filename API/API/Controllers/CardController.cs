@@ -154,5 +154,33 @@ namespace API.Controllers
                 };
             }
         }
+
+        [HttpGet("get_card_data/{token}/{card_id}")]
+        public Dictionary<string, dynamic> GetCardData(string token, int card_id)
+        {
+            try
+            {
+                var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
+                var card = db.Cards.Where(c => c.OwnerId == userId && c.Id == card_id).FirstOrDefault();
+                return new Dictionary<string, dynamic>()
+                {
+                    { "number", card.CardNumber},
+                    { "exp_month", card.ExpMonth },
+                    { "exp_year", card.ExpYear },
+                    { "cvv", card.CVV }
+                };
+            }
+            catch(Exception e)
+            {
+                return new Dictionary<string, dynamic>()
+                {
+                    { "number", null},
+                    { "exp_month", null },
+                    { "exp_year", null },
+                    { "cvv", null }
+                };
+
+            }
+        }
     }
 }
