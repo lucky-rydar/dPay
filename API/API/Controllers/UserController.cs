@@ -21,11 +21,11 @@ namespace API.Controllers
         }
 
         [HttpGet("register/{username}/{email}/{phone}/{password}")]
-        public RegisterStatus Register(string username, string email, string phone, string password)
+        public Dictionary<string, dynamic> Register(string username, string email, string phone, string password)
         {
             string hashedPassword = Hasher.StringToSHA256(password);
-            
-            if(db.Users.Where(u=>u.Username == username || u.Email == email).ToList().Count == 0)
+
+            if (db.Users.Where(u => u.Username == username || u.Email == email).ToList().Count == 0)
             {
                 // so we can register this user
                 string token = "";
@@ -33,8 +33,9 @@ namespace API.Controllers
                 {
                     token = TokenGenerator.Generate();
                 } while (db.Users.Where(u => u.Token == token).Count() != 0);
-                
-                db.Users.Add(new User() {
+
+                db.Users.Add(new User()
+                {
                     Username = username,
                     Email = email,
                     Phone = phone,
@@ -43,17 +44,17 @@ namespace API.Controllers
                 });
                 db.SaveChanges();
 
-                return new RegisterStatus() { Registered = true };
+                return new Dictionary<string, dynamic>() { { "registered", true } };
             }
             else
             {
                 // we cant register new user
-                return new RegisterStatus() { Registered = false };
+                return new Dictionary<string, dynamic>() { { "registered", false } };
             }
         }
 
         [HttpGet("login/{username}/{password}")]
-        public LoginStatus Login(string username, string password)
+        public Dictionary<string, dynamic> Login(string username, string password)
         {
             var users = db.Users;
 
@@ -65,20 +66,25 @@ namespace API.Controllers
             {
                 var user = request.First();
 
-                return new LoginStatus()
+                return new Dictionary<string, dynamic>()
                 {
-                    Logined = true,
-                    Token = user.Token,
-                    Username = user.Username,
-                    Email = user.Email,
-                    Phone = user.Phone
+                    { "logined", true},
+                    { "token", user.Token},
+                    {"username", user.Username },
+                    {"email", user.Email },
+                    {"phone", user.Phone }
                 };
+
             }
             else
             {
-                return new LoginStatus()
+                return new Dictionary<string, dynamic>()
                 {
-                    Logined = false
+                    { "logined", false},
+                    { "token", null},
+                    {"username", null},
+                    {"email", null},
+                    {"phone", null }
                 };
             }
         }

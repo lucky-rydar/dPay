@@ -21,13 +21,13 @@ namespace API.Controllers
         }
 
         [HttpGet("add/{token}/{number}/{month_exp}/{year_exp}/{cvv}")]
-        public AddCardStatus Add(string token, string number, string month_exp, string year_exp, string cvv)
+        public Dictionary<string, dynamic> Add(string token, string number, string month_exp, string year_exp, string cvv)
         {
             if (!Card.CardValid(number))
-                return new AddCardStatus() { Added = false, CardId = -1, Number = number };
+                return new Dictionary<string, dynamic>() { { "added", false}, { "card_id", -1}, { "number", number} };
 
             if(db.Users.Where(u => u.Token == token).Count() == 0)
-                return new AddCardStatus() { Added = false, CardId = -1, Number = number };
+                return new Dictionary<string, dynamic>() { { "added", false }, { "card_id", -1 }, { "number", number } };
 
             var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
 
@@ -50,16 +50,16 @@ namespace API.Controllers
 
                 var cardId = db.Cards.Where(c => c.CardNumber == number && c.OwnerId == userId).First().Id;
 
-                return new AddCardStatus() { Added = true, CardId = cardId, Number = number };
+                return new Dictionary<string, dynamic>() { { "added", true }, { "card_id", cardId }, { "number", number } };
             }
             else
             {
-                return new AddCardStatus() { Added = false, CardId = -1, Number = number };
+                return new Dictionary<string, dynamic>() { { "added", false }, { "card_id", -1 }, { "number", number } };
             }
         }
 
         [HttpGet("remove/{token}/{card_id}")]
-        public bool Remove(string token, int card_id)
+        public Dictionary<string, dynamic> Remove(string token, int card_id)
         {
             var owner_id = db.Users.Where(u => u.Token == token).First().Id;
             var card = db.Cards.Where(c => c.Id == card_id && c.OwnerId == owner_id).First();
@@ -67,11 +67,11 @@ namespace API.Controllers
             {
                 db.Cards.Remove(card);
                 db.SaveChanges();
-                return true;
+                return new Dictionary<string, dynamic>(){ { "removed", true} };
             }
             catch(Exception)
             {
-                return false;
+                return new Dictionary<string, dynamic>() { { "removed", false } };
             }
         }
 
