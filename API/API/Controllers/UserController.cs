@@ -88,5 +88,20 @@ namespace API.Controllers
                 };
             }
         }
+
+        [HttpGet("change_phone/{token}/{new_phone}")]
+        public Dictionary<string, dynamic> ChangePhone(string token, string new_phone)
+        {
+            try
+            {
+                var user = db.Users.Where(u => u.Token == token).FirstOrDefault();
+                user.Phone = new_phone;
+                return new Dictionary<string, dynamic>() { { "changed", true } };
+            }
+            catch(Exception)
+            {
+                return new Dictionary<string, dynamic>() { { "changed", false } };
+            }
+        }
     }
 }
