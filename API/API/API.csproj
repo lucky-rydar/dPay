@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LiqPay" Version="2020.6.2410.5129" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
+    <PackageReference Include="PrivatBank.LiqPay" Version="1.0.0" />
   </ItemGroup>
 
 

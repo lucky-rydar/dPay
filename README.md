@@ -44,8 +44,9 @@
 		6. get_card_data/{token}/{card_id}
 		
 	3. transaction_controller:
-		1. send/by_card_num/{token}/{from_card_id}/{to_card_num}/{amount}/{currency}
-		2. send/by_card_id/{token}/{from_card_id}/{to_card_id}/{amount}/{currency}
+		1. send_by_card/{token}/{from_card}/{to_card}/{amount}/{currency}
+		2. send_by_username/{token}/{from_username}/{to_username}/{amount}/{currency}
+		3. transactions/{token}
 		
 3. Frontend
 	1. login/register menu
