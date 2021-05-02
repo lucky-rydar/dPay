@@ -98,23 +98,23 @@ Page {
         }
 
         SendMoney{
-
+            id: sendMoneyMenu
         }
 
         Settings{
-
+            id: settingsMenu
         }
 
         Profile{
-
+            id: profileMenu
         }
 
         CardsList{
-
+            id: cardListMenu
         }
 
         AddCard{
-
+            id: addCardMenu
         }
     }
 }
