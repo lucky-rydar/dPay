@@ -5,28 +5,29 @@ import QtQuick.Layouts 1.3
 Page {
     id: page
 
-    Text {
-        id: text1
-        text: "Your profile"
-        anchors.bottom: groupBox.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: height/2
-        //font.pixelSize: 12
-    }
-
     GroupBox {
         id: groupBox
-        width: parent.width/1.4
-        height: parent.height/2
+        width: parent.width/1.3
+        height: parent.height/1.5
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
 
+        Text {
+            id: text1
+            text: "Your profile"
+            font.pointSize: 12
+            anchors.top: groupBox.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: height
+        }
+
         RowLayout {
             id: rowLayout
-            width: parent.width/1.5
+            width: parent.width/1.3
             height: parent.height/6
             anchors.horizontalCenter: parent.horizontalCenter
-
+            anchors.top: parent.top
+            anchors.topMargin: height
             Text{
                 text: "username: "
             }
@@ -41,7 +42,7 @@ Page {
 
         RowLayout {
             id: rowLayout1
-            width: parent.width/1.5
+            width: parent.width/1.3
             height: parent.height/6
             anchors.top: rowLayout.bottom
             Text {
@@ -59,7 +60,7 @@ Page {
 
         RowLayout {
             id: rowLayout2
-            width: parent.width/1.5
+            width: parent.width/1.3
             height: parent.height/6
             anchors.top: rowLayout1.bottom
             Text {
@@ -77,7 +78,7 @@ Page {
         TextField{
             id: newPhoneField
             placeholderText: "380990000001"
-            width: parent.width/1.5
+            width: parent.width/1.3
             anchors.top: rowLayout2.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: 0
@@ -85,12 +86,10 @@ Page {
         Button{
             id: newPhoneBtn
             text: "new phone"
+            width: parent.width/1.3
             anchors.top: newPhoneField.bottom
             anchors.topMargin: 0
             anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width/1.5
-
-
         }
     }
 }
