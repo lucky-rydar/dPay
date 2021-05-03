@@ -15,6 +15,11 @@ QString ApiWrapper::login(QString username, QString password)
     return makeRequest(baseUrl + "user/login/" + username + "/" + password);
 }
 
+QString ApiWrapper::change_phone(QString token, QString new_phone)
+{
+    return makeRequest(baseUrl + "user/change_phone/" + token + "/" + new_phone);
+}
+
 QString ApiWrapper::makeRequest(QString url)
 {
     QNetworkAccessManager accessManager;

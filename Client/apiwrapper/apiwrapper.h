@@ -15,6 +15,7 @@ public:
     // user
     Q_INVOKABLE QString registration(QString username, QString email, QString phone, QString password);
     Q_INVOKABLE QString login(QString username, QString password);
+    Q_INVOKABLE QString change_phone(QString token, QString new_phone);
 
     // card
 
