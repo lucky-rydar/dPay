@@ -5,32 +5,17 @@ ApiWrapper::ApiWrapper(QObject *parent) : QObject(parent)
     baseUrl = "http://localhost:5000/api/"; // change on release
 }
 
-RegisterStatus ApiWrapper::registration(QString username, QString email, QString phone, QString password)
+QString ApiWrapper::registration(QString username, QString email, QString phone, QString password)
 {
-    auto jsonReply = makeRequest(baseUrl+"user/register/" + username + "/" + email + "/" + phone + "/" + password);
-
-    if(jsonReply.isEmpty())
-    {
-        return RegisterStatus{ false };
-    }
-    else
-    {
-        return RegisterStatus{ jsonReply["registered"].toBool() };
-    }
+    return makeRequest(baseUrl+"user/register/" + username + "/" + email + "/" + phone + "/" + password);
 }
 
-LoginStatus ApiWrapper::login(QString username, QString password)
+QString ApiWrapper::login(QString username, QString password)
 {
-    auto jsonReply = makeRequest(baseUrl + "user/login/" + username + "/" + password);
-
-    return LoginStatus{ jsonReply["logined"].toBool(),
-                        jsonReply["token"].toString(),
-                        jsonReply["email"].toString(),
-                        jsonReply["phone"].toString(),
-                jsonReply["username"].toString() };
+    return makeRequest(baseUrl + "user/login/" + username + "/" + password);
 }
 
-QJsonDocument ApiWrapper::makeRequest(QString url)
+QString ApiWrapper::makeRequest(QString url)
 {
     QNetworkAccessManager accessManager;
 
@@ -41,8 +26,5 @@ QJsonDocument ApiWrapper::makeRequest(QString url)
 
     loop.exec();
 
-    auto resJson = QJsonDocument::fromJson(reply->readAll());
-    qDebug() << resJson;
-
-    return resJson;
+    return reply->readAll();
 }

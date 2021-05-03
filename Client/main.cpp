@@ -13,8 +13,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<ClientUserData>("cpp.modules", 2, 0, "ClientUserData");
 
     // here declearing all additional structs to use them in qml
-    qRegisterMetaType<RegisterStatus>();
-    qRegisterMetaType<LoginStatus>();
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));

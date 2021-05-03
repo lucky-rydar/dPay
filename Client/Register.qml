@@ -57,10 +57,15 @@ Page {
             {
                 // TODO: add some additional checks of password1
 
-                var status = api.registration(usernameField.text,
+                var response = api.registration(usernameField.text,
                                  emailField.text,
                                  phoneField.text,
                                  password1.text)
+
+                console.log(response)
+
+                var status = JSON.parse(response)
+
                 if(!status.registered)
                 {
                     registrationStatus.text = "not registered"
@@ -100,6 +105,6 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.6600000262260437}
+    D{i:0;autoSize:true;formeditorZoom:0.6600000262260437;height:480;width:640}
 }
 ##^##*/

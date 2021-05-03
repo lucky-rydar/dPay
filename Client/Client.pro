@@ -8,8 +8,6 @@ CONFIG += c++11
 
 SOURCES += \
         apiwrapper/apiwrapper.cpp \
-        apiwrapper/loginstatus.cpp \
-        apiwrapper/registerstatus.cpp \
         clientuserdata.cpp \
         main.cpp
 
@@ -35,6 +33,4 @@ ANDROID_ABIS = armeabi-v7a
 
 HEADERS += \
     apiwrapper/apiwrapper.h \
-    apiwrapper/loginstatus.h \
-    apiwrapper/registerstatus.h \
     clientuserdata.h

@@ -29,13 +29,16 @@ Page {
         width: passwordField.width/2
 
         onClicked: {
-            var status = api.login(usernameField.text, passwordField.text)
+            var response = api.login(usernameField.text, passwordField.text)
+            var status = JSON.parse(response)
+
             console.log(status.logined)
 
             if(status.logined)
             {
                 // so we logined
-                console.log(status)
+                console.log(response)
+
                 //TODO: turn main menu and save received data
 
                 loginStatus.text = ""
