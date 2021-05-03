@@ -26,6 +26,8 @@ public:
     Q_INVOKABLE QString get_card_data(QString token, QString card_id);
 
     // transaction
+    Q_INVOKABLE QString send_by_card(QString token, QString from_card, QString to_card, QString amount, QString currency);
+    Q_INVOKABLE QString transactions(QString token);
 
 private:
     QString makeRequest(QString url);

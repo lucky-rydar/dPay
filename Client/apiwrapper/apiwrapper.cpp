@@ -50,6 +50,16 @@ QString ApiWrapper::get_card_data(QString token, QString card_id)
     return makeRequest(baseUrl + "card/get_card_data/" + token + "/" + card_id);
 }
 
+QString ApiWrapper::send_by_card(QString token, QString from_card, QString to_card, QString amount, QString currency) // later use description also
+{
+    return makeRequest(baseUrl + "transaction/send_by_card/" + token + "/" + from_card + "/" + to_card + "/" + amount + "/" + currency);
+}
+
+QString ApiWrapper::transactions(QString token)
+{
+    return makeRequest(baseUrl + "transaction/transactions/" + token);
+}
+
 QString ApiWrapper::makeRequest(QString url)
 {
     QNetworkAccessManager accessManager;
