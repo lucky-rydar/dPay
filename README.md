@@ -28,6 +28,16 @@
 		6. to_user
 		7. amount
 		8. currency
+		
+	// entity that receive donates
+	4. donation: 
+		1. id (unique)
+		2. donation_token (unique) (8 or 16 char)
+		3. start_date
+		4. owner_id
+		5. receiver_card_id
+		5. title
+		6. description
 
 2. API:
 	1. user_controller:
@@ -48,6 +58,11 @@
 		2. send_by_username/{token}/{from_username}/{to_username}/{amount}/{currency}
 		3. transactions/{token}
 		
+	4. donation_controller:
+		1. create_donation/{token}/{receiver_card_id}/{title}/{description}
+		2. donation_by_token/{donation_token}
+		3. donate/{donation_token}/{from_card}/{amount}
+		
 3. Frontend
 	1. login/register menu
 	2. main_menu:
@@ -55,7 +70,10 @@
 		2. profile
 		3. list_of_cards
 		4. send_money
-		
+		5. donations
+			1. create_donate
+			2. find
+			2. donate
 		
 		
 		
