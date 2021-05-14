@@ -14,10 +14,10 @@
 		2. owner_id
 		3. is_default
 		4. name
-		5. card_number (unique)
-		6. cvv
-		7. exp_month
-		8. exp_year
+		5. card_token (unique)
+		6. balance
+		7. currency
+		
 		
 	3. transaction:
 		1. id (unique)
@@ -45,15 +45,15 @@
 		3. change_phone/{token}/{new_phone}
 		
 	2. card_controller:
-		1. add/{token}/{number}/{month_exp}/{year_exp}/{cvv}
-		2. remove/{token}/{card_id}
+		1. add/{token}/{name}/{currency}
+		2. remove/{token}/{card_token}
 		3. cards/{token}
-		4. rename/{token}/{card_id}/{new_name}
-		5. set_default/{token}/{card_id}
-		6. get_card_data/{token}/{card_id}
+		4. rename/{token}/{card_token}/{new_name}
+		5. set_default/{token}/{card_token}
+		6. get_card_data/{token}/{card_token}
 		
 	3. transaction_controller:
-		1. send_by_card/{token}/{from_card}/{to_card}/{amount}/{currency}
+		1. send_by_card/{token}/{from_card}/{to_card}/{amount}/
 		2. send_by_username/{token}/{from_username}/{to_username}/{amount}/{currency}
 		3. transactions/{token}
 		

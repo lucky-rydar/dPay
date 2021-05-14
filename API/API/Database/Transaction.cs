@@ -14,7 +14,7 @@ namespace API.Database
         public string ToCard { get; set; }
         public string FromUser { get; set; }
         public string ToUser { get; set; }
-        public int Amount { get; set; }
+        public float Amount { get; set; }
         public string Currency { get; set; }
     }
 }

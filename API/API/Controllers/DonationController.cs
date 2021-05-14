@@ -21,21 +21,21 @@ namespace API.Controllers
             this.db.Database.EnsureCreated();
         }
 
-        [HttpGet("create_donation/{token}/{receiver_card_id}/{title}/{description}")]
-        public Dictionary<string, dynamic> CreateDonation(string token, int receiver_card_id/*if (-1), so use default*/, string title, string description)
+        [HttpGet("create_donation/{token}/{receiver_card_token}/{title}/{description}")]
+        public Dictionary<string, dynamic> CreateDonation(string token, string receiver_card_token/*if equals "null", so use default*/, string title, string description)
         {
             try
             {
                 var user = db.Users.Where(u => u.Token == token).FirstOrDefault();
                 Card receiverCard = new Card();
 
-                if (receiver_card_id == -1)
+                if (receiver_card_token == "null")
                 {
                     receiverCard = db.Cards.Where(c => c.OwnerId == user.Id && c.IsDefault == true).FirstOrDefault();
                 }
                 else
                 {
-                    receiverCard = db.Cards.Where(c => c.OwnerId == user.Id && c.Id == receiver_card_id).FirstOrDefault();
+                    receiverCard = db.Cards.Where(c => c.OwnerId == user.Id && c.CardToken == receiver_card_token).FirstOrDefault();
                 }
 
                 string donationToken = "";
@@ -63,12 +63,13 @@ namespace API.Controllers
                 };
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return new Dictionary<string, dynamic>()
                 {
                     { "success", false },
-                    { "donation_token", "" }
+                    { "donation_token", "" },
+                    { "err", e.InnerException.Message }
                 };
             }
         }
@@ -91,7 +92,7 @@ namespace API.Controllers
                         { "title", donation.Title },
                         { "description", donation.Description },
                         { "donation_token", donation.DonationToken },
-                        { "card_receiver", cardReceiver.CardNumber }
+                        { "card_receiver", cardReceiver.CardToken }
                     };
 
                     res.Add(donationInfo);
@@ -118,7 +119,7 @@ namespace API.Controllers
                     { "exists", false },
                     { "title",  donation.Title },
                     { "description", donation.Description },
-                    { "card_receiver", card.CardNumber }
+                    { "card_receiver", card.CardToken }
                 };
             }
             catch (Exception)
@@ -131,9 +132,7 @@ namespace API.Controllers
                     { "card_receiver", "" }
 
                 };
-
             }
-            return null;
         }
     }
 }

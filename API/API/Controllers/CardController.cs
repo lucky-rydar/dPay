@@ -13,6 +13,7 @@ namespace API.Controllers
     public class CardController : ControllerBase
     {
         CustomDBContext db;
+        int baseTokenLength = 8;
 
         public CardController(CustomDBContext db)
         {
@@ -20,49 +21,47 @@ namespace API.Controllers
             this.db.Database.EnsureCreated();
         }
 
-        [HttpGet("add/{token}/{number}/{month_exp}/{year_exp}/{cvv}")]
-        public Dictionary<string, dynamic> Add(string token, string number, string month_exp, string year_exp, string cvv)
+        [HttpGet("add/{token}/{name}/{currency}")]
+        public Dictionary<string, dynamic> Add(string token, string name, string currency)
         {
-            if (!Card.CardValid(number))
-                return new Dictionary<string, dynamic>() { { "added", false}, { "card_id", -1}, { "number", number} };
-
-            if(db.Users.Where(u => u.Token == token).Count() == 0)
-                return new Dictionary<string, dynamic>() { { "added", false }, { "card_id", -1 }, { "number", number } };
-
-            var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
-
-            bool doMakeDefault = db.Cards.Where(c => c.OwnerId == userId).Count() == 0;
-            bool exists = db.Cards.Where(c => c.CardNumber == number && c.OwnerId == userId).Count() == 1;
-
-            if (!exists)
+            try
             {
+                var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
+
+                bool doMakeDefault = db.Cards.Where(c => c.OwnerId == userId).Count() == 0;
+
+                string cardToken = "";
+                do
+                {
+                    cardToken = TokenGenerator.Generate(baseTokenLength);
+                } while (db.Cards.Where(d => d.CardToken == cardToken).Count() != 0);
+
                 db.Cards.Add(new Card()
                 {
-                    CardNumber = number,
+                    CardToken = cardToken,
                     OwnerId = userId,
-                    ExpMonth = month_exp,
-                    ExpYear = year_exp,
-                    CVV = cvv,
                     IsDefault = doMakeDefault,
-                    Name = ""
+                    Name = name,
+                    Balance = 0,
+                    Currency = currency
                 });
                 db.SaveChanges();
 
-                var cardId = db.Cards.Where(c => c.CardNumber == number && c.OwnerId == userId).First().Id;
+                var cardId = db.Cards.Where(c => c.CardToken == cardToken && c.OwnerId == userId).First().Id;
 
-                return new Dictionary<string, dynamic>() { { "added", true }, { "card_id", cardId }, { "number", number } };
+                return new Dictionary<string, dynamic>() { { "added", true }, { "card_id", cardId }, { "card_token", cardToken } };
             }
-            else
+            catch(Exception)
             {
-                return new Dictionary<string, dynamic>() { { "added", false }, { "card_id", -1 }, { "number", number } };
+                return new Dictionary<string, dynamic>() { { "added", false }, { "card_id", null }, { "card_token", null } };
             }
         }
 
-        [HttpGet("remove/{token}/{card_id}")]
-        public Dictionary<string, dynamic> Remove(string token, int card_id)
+        [HttpGet("remove/{token}/{card_token}")]
+        public Dictionary<string, dynamic> Remove(string token, string card_token)
         {
             var owner_id = db.Users.Where(u => u.Token == token).First().Id;
-            var card = db.Cards.Where(c => c.Id == card_id && c.OwnerId == owner_id).First();
+            var card = db.Cards.Where(c => c.CardToken == card_token && c.OwnerId == owner_id).First();
             try
             {
                 db.Cards.Remove(card);
@@ -87,15 +86,17 @@ namespace API.Controllers
                 foreach(var card in cards)
                 {
                     var cardInfo = new Dictionary<string, dynamic>();
-                    cardInfo.Add("name", card.Name);
-                    cardInfo.Add("number", card.CardNumber);
                     cardInfo.Add("id", card.Id);
-                    cardInfo.Add("default", card.IsDefault);
+                    cardInfo.Add("name", card.Name);
+                    cardInfo.Add("card_token", card.CardToken);
+                    cardInfo.Add("balance", card.Balance);
+                    cardInfo.Add("currency", card.Currency);
+                    cardInfo.Add("is_default", card.IsDefault);
 
                     res.Add(cardInfo);
                 }
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 res = new List<Dictionary<string, dynamic>>();
                 return res;
@@ -104,14 +105,14 @@ namespace API.Controllers
             return res;
         }
 
-        [HttpGet("rename/{token}/{card_id}/{new_name}")]
-        public Dictionary<string, dynamic> Rename(string token, int card_id, string new_name)
+        [HttpGet("rename/{token}/{card_token}/{new_name}")]
+        public Dictionary<string, dynamic> Rename(string token, string card_token, string new_name)
         {
             try
             {
                 var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
 
-                var card = db.Cards.Where(c => c.OwnerId == userId && c.Id == card_id).FirstOrDefault();
+                var card = db.Cards.Where(c => c.OwnerId == userId && c.CardToken == card_token).FirstOrDefault();
                 card.Name = new_name;
                 db.SaveChanges();
 
@@ -120,17 +121,17 @@ namespace API.Controllers
                     { "new_name", card.Name}
                 };    
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return new Dictionary<string, dynamic>() { 
                     { "renamed", false }, 
-                    { "new_name", "" } 
+                    { "new_name", null } 
                 };
             }
         }
 
-        [HttpGet("set_default/{token}/{card_id}")]
-        public Dictionary<string, dynamic> SetDefault(string token, int card_id)
+        [HttpGet("set_default/{token}/{card_token}")]
+        public Dictionary<string, dynamic> SetDefault(string token, string card_token)
         {
             try
             {
@@ -138,7 +139,7 @@ namespace API.Controllers
                 var defaultCard = db.Cards.Where(c => c.OwnerId == userId && c.IsDefault).FirstOrDefault();
                 defaultCard.IsDefault = false;
 
-                var card = db.Cards.Where(c => c.OwnerId == userId && c.Id == card_id).FirstOrDefault();
+                var card = db.Cards.Where(c => c.OwnerId == userId && c.CardToken == card_token).FirstOrDefault();
                 card.IsDefault = true;
 
                 return new Dictionary<string, dynamic>()
@@ -146,7 +147,7 @@ namespace API.Controllers
                     { "success", true }
                 };
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return new Dictionary<string, dynamic>()
                 {
@@ -155,29 +156,31 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("get_card_data/{token}/{card_id}")]
-        public Dictionary<string, dynamic> GetCardData(string token, int card_id)
+        [HttpGet("get_card_data/{token}/{card_token}")]
+        public Dictionary<string, dynamic> GetCardData(string token, string card_token)
         {
             try
             {
                 var userId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
-                var card = db.Cards.Where(c => c.OwnerId == userId && c.Id == card_id).FirstOrDefault();
+                var card = db.Cards.Where(c => c.OwnerId == userId && c.CardToken == card_token).FirstOrDefault();
                 return new Dictionary<string, dynamic>()
                 {
-                    { "number", card.CardNumber},
-                    { "exp_month", card.ExpMonth },
-                    { "exp_year", card.ExpYear },
-                    { "cvv", card.CVV }
+                    { "name", card.Name},
+                    { "card_token", card.CardToken},
+                    { "balance", card.Balance },
+                    { "currency", card.Currency },
+                    { "is_default", card.IsDefault }
                 };
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return new Dictionary<string, dynamic>()
                 {
-                    { "number", null},
-                    { "exp_month", null },
-                    { "exp_year", null },
-                    { "cvv", null }
+                    { "name", null },
+                    { "card_token", null },
+                    { "balance", null },
+                    { "currency", null },
+                    { "is_default", null }
                 };
 
             }

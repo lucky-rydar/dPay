@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
-    <PackageReference Include="PrivatBank.LiqPay" Version="1.0.0" />
   </ItemGroup>
 
 
