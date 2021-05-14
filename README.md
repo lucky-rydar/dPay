@@ -33,9 +33,8 @@
 	4. donation: 
 		1. id (unique)
 		2. donation_token (unique) (8 or 16 char)
-		3. start_date
-		4. owner_id
-		5. receiver_card_id
+		3. owner_id
+		4. receiver_card_id
 		5. title
 		6. description
 
@@ -60,8 +59,9 @@
 		
 	4. donation_controller:
 		1. create_donation/{token}/{receiver_card_id}/{title}/{description}
-		2. donation_by_token/{donation_token}
-		3. donate/{donation_token}/{from_card}/{amount}
+		2. users_donations/{token}
+		3. donation_by_token/{donation_token}
+		4. donate/{donation_token}/{from_card}/{amount}
 		
 3. Frontend
 	1. login/register menu
