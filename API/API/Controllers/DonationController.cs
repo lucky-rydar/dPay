@@ -104,5 +104,36 @@ namespace API.Controllers
                 return new List<Dictionary<string, dynamic>>();
             }
         }
+
+        [HttpGet("donation_by_token/{donation_token}")]
+        public Dictionary<string, dynamic> DonationByToken(string donation_token)
+        {
+            try
+            {
+                var donation = db.Donations.Where(d => d.DonationToken == donation_token).FirstOrDefault();
+                var card = db.Cards.Where(c => c.Id == donation.ReceiverCardId).FirstOrDefault();
+
+                return new Dictionary<string, dynamic>()
+                {
+                    { "exists", false },
+                    { "title",  donation.Title },
+                    { "description", donation.Description },
+                    { "card_receiver", card.CardNumber }
+                };
+            }
+            catch (Exception)
+            {
+                return new Dictionary<string, dynamic>()
+                {
+                    { "exists", false },
+                    { "title",  "" },
+                    { "exists", "" },
+                    { "card_receiver", "" }
+
+                };
+
+            }
+            return null;
+        }
     }
 }
