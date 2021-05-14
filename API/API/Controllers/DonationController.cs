@@ -72,5 +72,37 @@ namespace API.Controllers
                 };
             }
         }
+
+        [HttpGet("donations/{token}")]
+        public List<Dictionary<string, dynamic>> Donations(string token)
+        {
+            try
+            {
+                List<Dictionary<string, dynamic>> res = new List<Dictionary<string, dynamic>>();
+
+                var user = db.Users.Where(u => u.Token == token).FirstOrDefault();
+                var donations = db.Donations.Where(d => d.OwnerId == user.Id).ToList();
+                foreach(var donation in donations)
+                {
+                    var cardReceiver = db.Cards.Where(c => c.Id == donation.ReceiverCardId).FirstOrDefault();
+                    
+                    var donationInfo = new Dictionary<string, dynamic>()
+                    {
+                        { "title", donation.Title },
+                        { "description", donation.Description },
+                        { "donation_token", donation.DonationToken },
+                        { "card_receiver", cardReceiver.CardNumber }
+                    };
+
+                    res.Add(donationInfo);
+                }
+
+                return res;
+            }
+            catch(Exception)
+            {
+                return new List<Dictionary<string, dynamic>>();
+            }
+        }
     }
 }

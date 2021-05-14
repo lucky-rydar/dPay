@@ -59,7 +59,7 @@
 		
 	4. donation_controller:
 		1. create_donation/{token}/{receiver_card_id}/{title}/{description}
-		2. users_donations/{token}
+		2. donations/{token}
 		3. donation_by_token/{donation_token}
 		4. donate/{donation_token}/{from_card}/{amount}
 		
