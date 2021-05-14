@@ -9,9 +9,9 @@ namespace API
     {
         private static Random random = new Random();
         private static string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        private static int length = 32;
+        //private static int length = 32;
 
-        public static string Generate()
+        public static string Generate(int length)
         {
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());

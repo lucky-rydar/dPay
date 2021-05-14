@@ -13,6 +13,7 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         CustomDBContext db;
+        int baseTokenLength = 32;
 
         public UserController(CustomDBContext db)
         {
@@ -31,7 +32,7 @@ namespace API.Controllers
                 string token = "";
                 do
                 {
-                    token = TokenGenerator.Generate();
+                    token = TokenGenerator.Generate(baseTokenLength);
                 } while (db.Users.Where(u => u.Token == token).Count() != 0);
 
                 db.Users.Add(new User()
