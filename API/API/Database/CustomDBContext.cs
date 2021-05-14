@@ -13,6 +13,7 @@ namespace API.Database
         public DbSet<User> Users { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Donation> Donations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,6 +29,7 @@ namespace API.Database
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Card>().ToTable("Cards");
             modelBuilder.Entity<Transaction>().ToTable("Transactions");
+            modelBuilder.Entity<Donation>().ToTable("Donations");
 
             modelBuilder.Entity<User>(entity=> {
                 entity.HasKey(k => k.Id);
@@ -38,6 +40,10 @@ namespace API.Database
             });
             
             modelBuilder.Entity<Transaction>(entity => {
+                entity.HasKey(k => k.Id);
+            });
+
+            modelBuilder.Entity<Donation>(entity => {
                 entity.HasKey(k => k.Id);
             });
 

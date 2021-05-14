@@ -7,11 +7,11 @@ namespace API.Database
 {
     public class Donation
     {
-        public int Id;
-        public string DonationToken;
-        public int OwnerId;
-        public int ReceiverCardId;
-        public string Title;
-        public string Description;
+        public int Id { get; set; }
+        public string DonationToken { get; set; }
+        public int OwnerId { get; set; }
+        public int ReceiverCardId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }
