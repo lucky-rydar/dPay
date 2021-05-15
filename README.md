@@ -29,7 +29,6 @@
 		7. amount
 		8. currency
 		
-	// entity that receive donates
 	4. donation: 
 		1. id (unique)
 		2. donation_token (unique) (8 or 16 char)
