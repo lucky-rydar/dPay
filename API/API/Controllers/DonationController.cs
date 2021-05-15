@@ -116,7 +116,7 @@ namespace API.Controllers
 
                 return new Dictionary<string, dynamic>()
                 {
-                    { "exists", false },
+                    { "exists", true },
                     { "title",  donation.Title },
                     { "description", donation.Description },
                     { "card_receiver", card.CardToken }
@@ -149,6 +149,8 @@ namespace API.Controllers
                     throw new Exception("invalid amount");
                 if (fromCard.Currency != toCard.Currency)
                     throw new Exception("not the same currency");
+                if (fromCard.Balance < amount)
+                    throw new Exception("not enough money");
 
                 fromCard.Balance -= amount;
                 toCard.Balance += amount;
@@ -175,7 +177,7 @@ namespace API.Controllers
 
                 return new Dictionary<string, dynamic>()
                 {
-                    { "success", false },
+                    { "success", true },
                     { "amount", amount },
                     { "order_id", orderId }
                 };
@@ -187,7 +189,7 @@ namespace API.Controllers
                     { "success", false },
                     { "amount", null },
                     { "order_id", null },
-                    { "err", e.InnerException.Message}
+                    { "err", e.Message}
                 };
             }
         }

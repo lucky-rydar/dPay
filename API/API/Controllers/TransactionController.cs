@@ -83,6 +83,65 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet("send_by_username/{token}/{from_username}/{to_username}/{amount}")]
+        public Dictionary<string, dynamic> SendByUsername(string token, string from_username, string to_username, float amount)
+        {
+            try
+            {
+                var fromUser = db.Users.Where(u => u.Username == from_username).FirstOrDefault();
+                var toUser = db.Users.Where(u => u.Username == to_username).FirstOrDefault();
+                var fromCard = db.Cards.Where(c => c.OwnerId == fromUser.Id && c.IsDefault).FirstOrDefault();
+                var toCard = db.Cards.Where(c => c.OwnerId == toUser.Id && c.IsDefault).FirstOrDefault();
+
+                if (amount <= 0)
+                    throw new Exception("invalid amount");
+                if (fromCard.Currency != toCard.Currency)
+                    throw new Exception("not the same currency");
+                if (fromCard.Balance < amount)
+                    throw new Exception("not enough money");
+
+                fromCard.Balance -= amount;
+                toCard.Balance += amount;
+
+                int orderId = 1;
+                try
+                {
+                    orderId = db.Transactions.Max(t => t.Id) + 1;
+                }
+                catch (Exception) { }
+
+                db.Transactions.Add(new Transaction()
+                {
+                    Id = orderId,
+                    Success = true,
+                    DateTime = DateTime.Now.ToString(),
+                    FromCard = fromCard.CardToken,
+                    ToCard = toCard.CardToken,
+                    Amount = amount,
+                    Currency = fromCard.Currency
+                });
+
+                db.SaveChanges();
+
+                return new Dictionary<string, dynamic>()
+                {
+                    { "success", true },
+                    { "amount", amount },
+                    { "order_id", orderId }
+                };
+            }
+            catch(Exception e)
+            {
+                return new Dictionary<string, dynamic>()
+                {
+                    { "success", false },
+                    { "amount", null },
+                    { "order_id", null },
+                    { "err", e.Message}
+                };
+            }
+        }
+
         [HttpGet("transactions/{token}")]
         public List<Dictionary<string, dynamic>> Transactions(string token)
         {
