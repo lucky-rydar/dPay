@@ -53,14 +53,14 @@
 		
 	3. transaction_controller:
 		1. send_by_card/{token}/{from_card}/{to_card}/{amount}/
-		2. send_by_username/{token}/{from_username}/{to_username}/{amount}/{currency}
+		2. send_by_username/{token}/{from_username}/{to_username}/{amount}
 		3. transactions/{token}
 		
 	4. donation_controller:
 		1. create_donation/{token}/{receiver_card_id}/{title}/{description}
 		2. donations/{token}
 		3. donation_by_token/{donation_token}
-		4. donate/{donation_token}/{from_card}/{amount}
+		4. donate/{token}/{from_card}/{donation_token}/{amount}
 		
 3. Frontend
 	1. login/register menu
