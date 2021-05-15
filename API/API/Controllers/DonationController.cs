@@ -134,5 +134,62 @@ namespace API.Controllers
                 };
             }
         }
+
+        [HttpGet("donate/{token}/{from_card}/{donation_token}/{amount}")]
+        public Dictionary<string, dynamic> Donate(string token, string from_card, string donation_token, float amount)
+        {
+            try
+            {
+                var user = db.Users.Where(u => u.Token == token).FirstOrDefault();
+                var donation = db.Donations.Where(d => d.DonationToken == donation_token).FirstOrDefault();
+                var fromCard = db.Cards.Where(c => c.CardToken == from_card && c.OwnerId == user.Id).FirstOrDefault();
+                var toCard = db.Cards.Where(c => c.Id == donation.ReceiverCardId).FirstOrDefault();
+
+                if (amount <= 0)
+                    throw new Exception("invalid amount");
+                if (fromCard.Currency != toCard.Currency)
+                    throw new Exception("not the same currency");
+
+                fromCard.Balance -= amount;
+                toCard.Balance += amount;
+
+                int orderId = 1;
+                try
+                {
+                    orderId = db.Transactions.Max(t => t.Id) + 1;
+                }
+                catch (Exception) { }
+
+                db.Transactions.Add(new Transaction()
+                {
+                    Id = orderId,
+                    Success = true,
+                    DateTime = DateTime.Now.ToString(),
+                    FromCard = fromCard.CardToken,
+                    ToCard = toCard.CardToken,
+                    Amount = amount,
+                    Currency = fromCard.Currency
+                });
+
+                db.SaveChanges();
+
+                return new Dictionary<string, dynamic>()
+                {
+                    { "success", false },
+                    { "amount", amount },
+                    { "order_id", orderId }
+                };
+            }
+            catch(Exception e)
+            {
+                return new Dictionary<string, dynamic>()
+                {
+                    { "success", false },
+                    { "amount", null },
+                    { "order_id", null },
+                    { "err", e.InnerException.Message}
+                };
+            }
+        }
     }
 }

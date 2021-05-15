@@ -47,7 +47,7 @@ namespace API.Controllers
                 int orderId = 1;
                 try
                 {
-                    orderId = db.Transactions.Max(t => t.Id);
+                    orderId = db.Transactions.Max(t => t.Id) + 1;
                 }
                 catch(Exception) { }
 
