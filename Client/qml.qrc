@@ -9,6 +9,6 @@
         <file>Profile.qml</file>
         <file>SendMoney.qml</file>
         <file>CardsList.qml</file>
-        <file>AddCard.qml</file>
+        <file>CreateCard.qml</file>
     </qresource>
 </RCC>

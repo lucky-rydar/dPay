@@ -71,7 +71,7 @@ Page {
     }
 
     Button{
-        id: addCardBtn
+        id: createCardBtn
         text: "add card"
 
         height: mainMenuRoot.baseSideSize
@@ -113,7 +113,7 @@ Page {
             id: cardListMenu
         }
 
-        AddCard{
+        CreateCard{
             id: addCardMenu
         }
     }
