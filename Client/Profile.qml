@@ -5,6 +5,13 @@ import QtQuick.Layouts 1.3
 Page {
     id: page
 
+    function set_data(username, email, phone)
+    {
+        profileUsername.text = username
+        profileEmail.text = email
+        profilePhone.text = phone
+    }
+
     GroupBox {
         id: groupBox
         width: parent.width/1.3
@@ -32,6 +39,7 @@ Page {
                 text: "username: "
             }
             Text{
+                id: profileUsername
                 text: "test"
                 anchors{
                     right: parent.right
@@ -50,6 +58,7 @@ Page {
             }
 
             Text {
+                id: profileEmail
                 text: "test@gmail.com"
                 anchors{
                     right: parent.right
@@ -68,6 +77,7 @@ Page {
             }
 
             Text {
+                id: profilePhone
                 text: "099123456789"
                 anchors.right: parent.right
             }

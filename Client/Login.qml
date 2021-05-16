@@ -37,7 +37,12 @@ Page {
             if(status.logined)
             {
                 // so we logined
-                console.log(response)
+                clientUserData.username = status.username
+                clientUserData.email = status.email
+                clientUserData.phone = status.phone
+                clientUserData.token = status.token
+
+                console.log(clientUserData)
 
                 //TODO: turn main menu and save received data
 

@@ -24,6 +24,7 @@ Page {
             mainMenuSwipeView.currentIndex = 0
         }
     }
+
     Button{
         id: settingsBtn
         text: "settings"
@@ -51,6 +52,8 @@ Page {
         anchors.leftMargin: 0
 
         onClicked: {
+            profileMenu.set_data(clientUserData.username, clientUserData.email, clientUserData.phone);
+
             mainMenuSwipeView.currentIndex = 2
         }
     }

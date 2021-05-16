@@ -36,7 +36,7 @@ Page {
             anchors{
                 top: cardNameField.bottom
                 topMargin: height/2
-                left: cardNumberField.left
+                left: cardNameField.left
                 leftMargin: 0
             }
         }
