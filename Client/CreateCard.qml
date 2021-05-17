@@ -74,6 +74,9 @@ Page {
                     creatingStatus.text = ""
                     let res = api.add_card(clientUserData.token, cardNameField.text, currency.currentText)
                     console.log(res);
+
+                    cardNameField.clear();
+                    currency.currentIndex = 0;
                 }
             }
         }
