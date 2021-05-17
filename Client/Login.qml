@@ -42,7 +42,7 @@ Page {
                 clientUserData.phone = status.phone
                 clientUserData.token = status.token
 
-                console.log(clientUserData.toString())
+                console.log(JSON.stringify(clientUserData))
 
                 //TODO: turn main menu and save received data
 

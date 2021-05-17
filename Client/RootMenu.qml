@@ -11,6 +11,26 @@ Item {
 
     ClientUserData{
         id: clientUserData
+
+        property list<CardData> cards;
+        function update_cards(json_cards) {
+            let parsed_cards = JSON.parse(json_cards)
+            cards = []
+            for(var i = 0; i < parsed_cards.length; i++){
+                var card = Qt.createComponent("CardData.qml");
+                card.id = parsed_cards[i].id
+                card.name = parsed_cards[i].name
+                card.card_token = parsed_cards[i].card_token
+                card.balance = parsed_cards[i].balance
+                card.currency = parsed_cards[i].currency
+                card.is_default = parsed_cards[i].is_default
+
+                cards.push(card);
+                console.log(JSON.stringify(parsed_cards[i]))
+            }
+
+            console.log(JSON.stringify(cards[0]))
+        }
     }
 
     ApiWrapper{

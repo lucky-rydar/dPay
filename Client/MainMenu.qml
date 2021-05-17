@@ -70,6 +70,7 @@ Page {
 
         onClicked: {
             mainMenuSwipeView.currentIndex = 3
+            clientUserData.update_cards(api.cards(clientUserData.token))
         }
     }
 
