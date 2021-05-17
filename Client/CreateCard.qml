@@ -52,13 +52,30 @@ Page {
             }
         }
 
+        Text{
+            id: creatingStatus
+            anchors.bottom: createBtn.top
+            anchors.bottomMargin: 0
+            anchors.horizontalCenter: createBtn.horizontalCenter
+        }
+
         Button {
-            id: button
+            id: createBtn
             text: "Create"
             anchors.bottom: parent.bottom
             anchors.bottomMargin: height/2
             anchors.horizontalCenter: parent.horizontalCenter
 
+            onClicked: {
+                if(currency.currentText == "select currency"){
+                    creatingStatus.text = "Currency is not selected"
+                }
+                else{
+                    creatingStatus.text = ""
+                    let res = api.add_card(clientUserData.token, cardNameField.text, currency.currentText)
+                    console.log(res);
+                }
+            }
         }
 
     }
