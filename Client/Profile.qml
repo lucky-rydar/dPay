@@ -100,6 +100,16 @@ Page {
             anchors.top: newPhoneField.bottom
             anchors.topMargin: 0
             anchors.horizontalCenter: parent.horizontalCenter
+
+            onClicked: {
+                let response = api.change_phone(clientUserData.token, newPhoneField.text)
+                let from_json = JSON.parse(response)
+                if(from_json.changed){
+                    profilePhone.text = newPhoneField.text
+                    clientUserData.phone = newPhoneField.text
+                }
+                newPhoneField.text = ""
+            }
         }
     }
 }
