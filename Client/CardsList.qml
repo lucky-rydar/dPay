@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
+import QtQuick.Dialogs 1.2
 
 Page {
     ListView{
@@ -42,7 +43,15 @@ Page {
                     rightMargin: 10
                 }
 
-
+                MouseArea{
+                    anchors{
+                        fill: parent
+                    }
+                    onClicked: {
+                        api.remove_card(clientUserData.token, card_token)
+                        clientUserData.update_cards(api.cards(clientUserData.token))
+                    }
+                }
             }
 
             Text {
