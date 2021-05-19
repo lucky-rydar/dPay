@@ -9,6 +9,38 @@ Page {
 
     property int baseSideSize: width/5
 
+    SwipeView{
+        id: mainMenuSwipeView
+        height: parent.height - sendMoneyBtn.height
+        width: parent.width
+        anchors{
+            top: parent.top
+            topMargin: 0
+            left: parent.left
+            leftMargin: 0
+        }
+
+        SendMoney{
+            id: sendMoneyMenu
+        }
+
+        Settings{
+            id: settingsMenu
+        }
+
+        Profile{
+            id: profileMenu
+        }
+
+        CardsList{
+            id: cardListMenu
+        }
+
+        CreateCard{
+            id: addCardMenu
+        }
+    }
+
     Button{
         id: sendMoneyBtn
         text: "send money"
@@ -90,37 +122,7 @@ Page {
         }
     }
 
-    SwipeView{
-        id: mainMenuSwipeView
-        height: parent.height - sendMoneyBtn.height
-        width: parent.width
-        anchors{
-            top: parent.top
-            topMargin: 0
-            left: parent.left
-            leftMargin: 0
-        }
 
-        SendMoney{
-            id: sendMoneyMenu
-        }
-
-        Settings{
-            id: settingsMenu
-        }
-
-        Profile{
-            id: profileMenu
-        }
-
-        CardsList{
-            id: cardListMenu
-        }
-
-        CreateCard{
-            id: addCardMenu
-        }
-    }
 }
 
 /*##^##
