@@ -9,7 +9,7 @@ Page {
 
     property int baseSideSize: width/5
 
-    SwipeView{
+    /*SwipeView{
         id: mainMenuSwipeView
         height: parent.height - sendMoneyBtn.height
         width: parent.width
@@ -39,88 +39,101 @@ Page {
         CreateCard{
             id: addCardMenu
         }
-    }
+    }*/
 
-    Button{
-        id: sendMoneyBtn
-        text: "send money"
+    header: ToolBar {
+        contentHeight: toolButton.implicitHeight
 
-        height: mainMenuRoot.baseSideSize
-        width: mainMenuRoot.baseSideSize
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.leftMargin: 0
-        anchors.bottomMargin: 0
+        ToolButton {
+            id: menuListButton
+            text: mainMenuStackView.depth > 1 ? "◀" : "︙"
+            font.pixelSize: Qt.application.font.pixelSize * 1.6
+            onClicked: {
+                if (mainMenuStackView.depth > 1) {
+                    mainMenuStackView.pop()
+                    clientUserData.update_cards(api.cards(clientUserData.token))
+                } else {
+                    drawer.open()
+                }
+            }
+        }
 
-        onClicked: {
-            mainMenuSwipeView.currentIndex = 0
+        ToolButton {
+            id: toolButton
+            text: "🗘"
+            font.pixelSize: Qt.application.font.pixelSize * 1.6
+            anchors.right: parent.right
+
+            onClicked: {
+                //here update cards
+                clientUserData.update_cards(api.cards(clientUserData.token))
+            }
+        }
+
+        Label {
+            text: mainMenuStackView.currentItem.title
+            anchors.centerIn: parent
         }
     }
 
-    Button{
-        id: settingsBtn
-        text: "settings"
+    Drawer {
+        id: drawer
+        width: mainMenuRoot.width * 0.66
+        height: mainMenuRoot.height
 
-        height: mainMenuRoot.baseSideSize
-        width: mainMenuRoot.baseSideSize
-        anchors.left: sendMoneyBtn.right
-        anchors.leftMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+        Column {
+            anchors.fill: parent
 
-        onClicked: {
-            mainMenuSwipeView.currentIndex = 1
+            ItemDelegate {
+                text: qsTr("Profile")
+                width: parent.width
+                onClicked: {
+                    mainMenuStackView.push("Profile.qml")
+                    drawer.close()
+                }
+            }
+            ItemDelegate {
+                text: qsTr("Create card")
+                width: parent.width
+                onClicked: {
+                    mainMenuStackView.push("CreateCard.qml")
+                    drawer.close()
+                }
+            }
+            ItemDelegate {
+                text: qsTr("Send money")
+                width: parent.width
+                onClicked: {
+                    mainMenuStackView.push("SendMoney.qml")
+                    drawer.close()
+                }
+            }
+            ItemDelegate {
+                text: qsTr("Settings")
+                width: parent.width
+                onClicked: {
+                    mainMenuStackView.push("Settings.qml")
+                    drawer.close()
+                }
+            }
+            ItemDelegate {
+                text: qsTr("Quit")
+                width: parent.width
+                onClicked: {
+                    // do quit from acc
+                    drawer.close()
+                }
+            }
         }
     }
-    Button{
-        id: profileBtn
-        text: "profile"
 
-        height: mainMenuRoot.baseSideSize
-        width: mainMenuRoot.baseSideSize
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.left: settingsBtn.right
-        anchors.leftMargin: 0
-
-        onClicked: {
-            profileMenu.set_data(clientUserData.username, clientUserData.email, clientUserData.phone);
-
-            mainMenuSwipeView.currentIndex = 2
-        }
-    }
-    Button{
-        id: cardsListBtn
-        text: "cards"
-
-        height: mainMenuRoot.baseSideSize
-        width: mainMenuRoot.baseSideSize
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.left: profileBtn.right
-        anchors.leftMargin: 0
-
-        onClicked: {
-            mainMenuSwipeView.currentIndex = 3
-            clientUserData.update_cards(api.cards(clientUserData.token))
-        }
+    StackView {
+        id: mainMenuStackView
+        initialItem: "CardsList.qml"
+        anchors.fill: parent
     }
 
-    Button{
-        id: createCardBtn
-        text: "add card"
 
-        height: mainMenuRoot.baseSideSize
-        width: mainMenuRoot.baseSideSize
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.left: cardsListBtn.right
-        anchors.leftMargin: 0
-
-        onClicked: {
-            mainMenuSwipeView.currentIndex = 4
-        }
-    }
 
 
 }

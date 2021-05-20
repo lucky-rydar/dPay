@@ -46,10 +46,15 @@ Page {
 
                 //TODO: turn main menu and save received data
 
+                clientUserData.update_cards(api.cards(clientUserData.token))
+                rootSwipeView.currentIndex = 2
+
                 loginStatus.text = ""
                 usernameField.text = ""
                 passwordField.text = ""
                 loginStatus.text = ""
+
+
             }
             else
             {
