@@ -89,6 +89,7 @@ Page {
                 width: parent.width
                 onClicked: {
                     mainMenuStackView.push("Profile.qml")
+                    mainMenuStackView.currentItem.set_data(clientUserData.username, clientUserData.email, clientUserData.phone);
                     drawer.close()
                 }
             }
@@ -121,6 +122,8 @@ Page {
                 width: parent.width
                 onClicked: {
                     // do quit from acc
+                    clientUserData.clear()
+                    rootSwipeView.currentIndex = 1
                     drawer.close()
                 }
             }

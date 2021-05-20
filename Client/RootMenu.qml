@@ -31,6 +31,14 @@ Item {
 
             console.log(JSON.stringify(cards[0]))
         }
+
+        function clear(){
+            cards = []
+            token = ""
+            username = ""
+            phone = ""
+            email = ""
+        }
     }
 
     ApiWrapper{
