@@ -13,6 +13,8 @@ Item {
         id: clientUserData
 
         property list<CardData> cards;
+        property list<TransactionData> transactions;
+
         function update_cards(json_cards) {
             let parsed_cards = JSON.parse(json_cards)
             cards = []
@@ -30,6 +32,24 @@ Item {
             }
 
             console.log(JSON.stringify(cards[0]))
+        }
+
+        function update_transactions(json_transactions){
+            let parsed_transactions = JSON.parse(json_transactions)
+            transactions = []
+
+            for(var i = 0; i < parsed_transactions.length; i++){
+                var transaction = Qt.createComponent("TransactionData.qml");
+                transaction.success = parsed_transactions[i].success
+                transaction.date_time = parsed_transactions[i].date_time
+                transaction.from_card = parsed_transactions[i].from_card
+                transaction.to_card = parsed_transactions[i].to_card
+                transaction.amount = parsed_transactions[i].amount
+                transaction.currency = parsed_transactions[i].currency
+
+                transactions.push(transaction);
+                console.log("from update: " + JSON.stringify(transaction))
+            }
         }
 
         function clear(){

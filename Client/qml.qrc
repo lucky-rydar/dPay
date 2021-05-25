@@ -11,5 +11,7 @@
         <file>CardsList.qml</file>
         <file>CreateCard.qml</file>
         <file>CardData.qml</file>
+        <file>Transactions.qml</file>
+        <file>TransactionData.qml</file>
     </qresource>
 </RCC>
