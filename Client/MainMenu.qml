@@ -9,38 +9,6 @@ Page {
 
     property int baseSideSize: width/5
 
-    /*SwipeView{
-        id: mainMenuSwipeView
-        height: parent.height - sendMoneyBtn.height
-        width: parent.width
-        anchors{
-            top: parent.top
-            topMargin: 0
-            left: parent.left
-            leftMargin: 0
-        }
-
-        SendMoney{
-            id: sendMoneyMenu
-        }
-
-        Settings{
-            id: settingsMenu
-        }
-
-        Profile{
-            id: profileMenu
-        }
-
-        CardsList{
-            id: cardListMenu
-        }
-
-        CreateCard{
-            id: addCardMenu
-        }
-    }*/
-
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
 
@@ -93,6 +61,7 @@ Page {
                     drawer.close()
                 }
             }
+
             ItemDelegate {
                 text: qsTr("Create card")
                 width: parent.width
@@ -101,14 +70,44 @@ Page {
                     drawer.close()
                 }
             }
+
             ItemDelegate {
                 text: qsTr("Send money")
                 width: parent.width
                 onClicked: {
                     mainMenuStackView.push("SendMoney.qml")
+                    mainMenuStackView.currentItem.set_cards_model(clientUserData.cards);
                     drawer.close()
                 }
             }
+
+            ItemDelegate {
+                text: qsTr("Transactions")
+                width: parent.width
+                onClicked: {
+                    mainMenuStackView.push("Transactions.qml")
+                    drawer.close()
+                }
+            }
+
+            ItemDelegate {
+                text: qsTr("Create donation")
+                width: parent.width
+                onClicked: {
+                    mainMenuStackView.push("CreateDonation.qml")
+                    drawer.close()
+                }
+            }
+
+            ItemDelegate {
+                text: qsTr("Donate")
+                width: parent.width
+                onClicked: {
+                    mainMenuStackView.push("Donate.qml")
+                    drawer.close()
+                }
+            }
+
             ItemDelegate {
                 text: qsTr("Settings")
                 width: parent.width
@@ -117,11 +116,11 @@ Page {
                     drawer.close()
                 }
             }
+
             ItemDelegate {
                 text: qsTr("Quit")
                 width: parent.width
                 onClicked: {
-                    // do quit from acc
                     clientUserData.clear()
                     rootSwipeView.currentIndex = 1
                     drawer.close()
