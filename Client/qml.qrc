@@ -13,5 +13,7 @@
         <file>Transactions.qml</file>
         <file>TransactionData.qml</file>
         <file>CreateDonation.qml</file>
+        <file>Donations.qml</file>
+        <file>DonationData.qml</file>
     </qresource>
 </RCC>

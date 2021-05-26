@@ -14,6 +14,7 @@ Item {
 
         property list<CardData> cards;
         property list<TransactionData> transactions;
+        property list<DonationData> donations;
 
         function update_cards(json_cards) {
             let parsed_cards = JSON.parse(json_cards)
@@ -49,6 +50,22 @@ Item {
 
                 transactions.push(transaction);
                 console.log("from update: " + JSON.stringify(transaction))
+            }
+        }
+
+        function update_donations(json_donations){
+            let parsed_donations = JSON.parse(json_donations)
+            donations = []
+
+            for(var i = 0; i < parsed_donations.length; i++){
+                var donation = Qt.createComponent("DonationData.qml");
+                donation.title = parsed_donations[i].title
+                donation.description = parsed_donations[i].description
+                donation.donation_token = parsed_donations[i].donation_token
+                donation.card_receiver = parsed_donations[i].card_receiver
+
+                donations.push(donation);
+                console.log("from update: " + JSON.stringify(donation))
             }
         }
 
