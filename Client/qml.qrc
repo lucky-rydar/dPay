@@ -12,5 +12,6 @@
         <file>CardData.qml</file>
         <file>Transactions.qml</file>
         <file>TransactionData.qml</file>
+        <file>CreateDonation.qml</file>
     </qresource>
 </RCC>
