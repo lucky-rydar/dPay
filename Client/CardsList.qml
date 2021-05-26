@@ -22,6 +22,7 @@ Page {
             color: "gray"
 
             Rectangle {
+                visible: !is_default
                 Text{
                     text: "🗑"
                     color: "white"
