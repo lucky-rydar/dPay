@@ -118,15 +118,6 @@ Page {
             }
 
             ItemDelegate {
-                text: qsTr("Settings")
-                width: parent.width
-                onClicked: {
-                    mainMenuStackView.push("Settings.qml")
-                    drawer.close()
-                }
-            }
-
-            ItemDelegate {
                 text: qsTr("Quit")
                 width: parent.width
                 onClicked: {

@@ -5,7 +5,6 @@
         <file>Login.qml</file>
         <file>Register.qml</file>
         <file>MainMenu.qml</file>
-        <file>Settings.qml</file>
         <file>Profile.qml</file>
         <file>SendMoney.qml</file>
         <file>CardsList.qml</file>
