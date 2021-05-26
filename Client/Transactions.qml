@@ -23,7 +23,7 @@ Page {
                 horizontalCenter: parent.horizontalCenter
             }
 
-            color: "gray"
+            color: success ? "green" : "#fa2600"
 
             Text{
                 id: fromCardLable

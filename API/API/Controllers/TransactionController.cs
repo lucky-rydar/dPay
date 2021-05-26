@@ -25,12 +25,23 @@ namespace API.Controllers
         [HttpGet("send_by_card/{token}/{from_card}/{to_card}/{amount}")]
         public Dictionary<string, dynamic> SendByCard(string token, string from_card, string to_card, float amount)
         {
+            int orderId = 1;
+            try
+            {
+                orderId = db.Transactions.Max(t => t.Id) + 1;
+            }
+            catch (Exception) { }
+
+            string cur = "";
+
             try
             {
                 Dictionary<string, dynamic> res = new Dictionary<string, dynamic>();
 
                 var userFrom = db.Users.Where(u => u.Token == token).FirstOrDefault();
                 var fromCard = db.Cards.Where(c => c.CardToken == from_card).FirstOrDefault();
+                cur = fromCard.Currency;
+
                 var toCard = db.Cards.Where(c => c.CardToken == to_card).FirstOrDefault();
                 if (amount <= 0)
                     throw new Exception();
@@ -44,12 +55,7 @@ namespace API.Controllers
                 toCard.Balance += amount;
                 fromCard.Balance -= amount;
 
-                int orderId = 1;
-                try
-                {
-                    orderId = db.Transactions.Max(t => t.Id) + 1;
-                }
-                catch(Exception) { }
+                cur = fromCard.Currency;
 
                 db.Transactions.Add(new Transaction()
                 {
@@ -74,17 +80,30 @@ namespace API.Controllers
             }
             catch (Exception)
             {
+                db.Transactions.Add(new Transaction()
+                {
+                    Id = orderId,
+                    Success = false,
+                    DateTime = DateTime.Now.ToString(),
+                    FromCard = from_card,
+                    ToCard = to_card,
+                    Amount = amount,
+                    Currency = cur
+                });
+
+                db.SaveChanges();
+
                 return new Dictionary<string, dynamic>()
                 {
                     { "success", false },
-                    { "order_id", null },
-                    { "amount", null }
+                    { "order_id", orderId },
+                    { "amount", amount }
                 };
             }
         }
 
         [HttpGet("send_by_username/{token}/{from_username}/{to_username}/{amount}")]
-        public Dictionary<string, dynamic> SendByUsername(string token, string from_username, string to_username, float amount)
+        public Dictionary<string, dynamic> SendByUsername(string token, string from_username, string to_username, float amount) // todo save in database if even failure
         {
             try
             {
