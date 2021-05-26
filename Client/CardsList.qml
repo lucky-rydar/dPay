@@ -83,6 +83,37 @@ Page {
                 }
             }
 
+            Rectangle{
+                id: copyButton
+                color: "#00000000"
+                width: cardToken.height * 1.5
+                height: cardToken.height * 1.5
+                anchors{
+                    left: cardToken.right
+                    leftMargin: width/4
+                    verticalCenter: cardToken.verticalCenter
+                }
+
+
+                Text{
+                    id: copyLabel
+                    text: "🗎"
+                    font.pointSize: copyButton.width
+                    color: "white"
+                    anchors.centerIn: parent
+
+                }
+
+                MouseArea{
+                    id: copyMouseArea
+                    anchors.fill: parent
+
+                    onClicked: {
+                        // TODO: realize copying of token
+                    }
+                }
+            }
+
             Text {
                 id: currencyBalanceCard
                 text: balance + " " + currency
