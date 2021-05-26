@@ -100,6 +100,15 @@ Page {
             }
 
             ItemDelegate {
+                text: qsTr("Donations")
+                width: parent.width
+                onClicked: {
+                    mainMenuStackView.push("Donations.qml")
+                    drawer.close()
+                }
+            }
+
+            ItemDelegate {
                 text: qsTr("Donate")
                 width: parent.width
                 onClicked: {
