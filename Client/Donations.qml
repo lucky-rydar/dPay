@@ -5,7 +5,7 @@ Page {
 
     ListView{
         id: donationsView
-        model: clientUserData.transactions
+        model: clientUserData.donations
 
         anchors{
             fill: parent
@@ -87,13 +87,11 @@ Page {
                 }
             }
         }
+    }
 
-
-        // @disable-check M16
-        Component.onCompleted: {
-            clientUserData.update_donations(api.donations(clientUserData.token))
-            donationsView.model = clientUserData.donations
-        }
+    // @disable-check M16
+    Component.onCompleted: {
+        clientUserData.update_donations(api.donations(clientUserData.token))
     }
 }
 

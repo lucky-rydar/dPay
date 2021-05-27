@@ -49,7 +49,7 @@ Item {
                 transaction.currency = parsed_transactions[i].currency
 
                 transactions.push(transaction);
-                console.log("from update: " + JSON.stringify(transaction))
+                //console.log("from update: " + JSON.stringify(transaction))
             }
         }
 
@@ -65,7 +65,7 @@ Item {
                 donation.card_receiver = parsed_donations[i].card_receiver
 
                 donations.push(donation);
-                console.log("from update: " + JSON.stringify(donation))
+                //console.log("from update: " + JSON.stringify(donation))
             }
         }
 
@@ -86,7 +86,7 @@ Item {
         id: rootSwipeView
         anchors.fill: parent
         currentIndex: 1
-        //interactive: false //TODO: uncomment on release
+        interactive: false
 
         Register{
             id: regPage

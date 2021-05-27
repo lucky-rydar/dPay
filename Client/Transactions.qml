@@ -80,12 +80,12 @@ Page {
             }
 
         }
+    }
 
-        // @disable-check M16
-        Component.onCompleted: {
-            clientUserData.update_transactions(api.transactions(clientUserData.token))
-            transactionsView.model = clientUserData.transactions
-        }
+    // @disable-check M16
+    Component.onCompleted: {
+        clientUserData.update_transactions(api.transactions(clientUserData.token))
+        transactionsView.positionViewAtEnd()
     }
 }
 
