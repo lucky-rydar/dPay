@@ -46,8 +46,8 @@ Page {
         id: createAccBtn
         text: "Create"
         anchors.top: password2.bottom
-        anchors.horizontalCenter: password2.horizontalCenter
-        width: usernameField.width
+        anchors.left: password2.left
+        width: usernameField.width/2
         height: password2.height
 
         onClicked: {
@@ -87,6 +87,25 @@ Page {
                 registrationStatus.text = "Passwords are not the same"
             }
         }
+    }
+
+    Button{
+        id: turnRegMenuBtn
+        text: "Login"
+        width: usernameField.width/2
+        anchors.left: createAccBtn.right
+        anchors.top: password2.bottom
+
+        onClicked:{
+            usernameField.text = ""
+            emailField.text = ""
+            phoneField.text = ""
+            password1.text = ""
+            password2.text = ""
+            rootSwipeView.currentIndex = 1
+
+        }
+
     }
 
     Text{

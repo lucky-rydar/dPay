@@ -30,9 +30,8 @@ Page {
 
         onClicked: {
             var response = api.login(usernameField.text, passwordField.text)
+            console.log(response)
             var status = JSON.parse(response)
-
-            console.log(status.logined)
 
             if(status.logined)
             {
