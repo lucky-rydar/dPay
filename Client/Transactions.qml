@@ -85,7 +85,6 @@ Page {
         Component.onCompleted: {
             clientUserData.update_transactions(api.transactions(clientUserData.token))
             transactionsView.model = clientUserData.transactions
-            transactionsView.positionViewAtEnd()
         }
     }
 }

@@ -105,8 +105,6 @@ Page {
                 width: parent.width
                 onClicked: {
                     mainMenuStackView.push("Donations.qml")
-                    //mainMenuStackView.currentItem.set_data(clientUserData.donations);
-                    // !!!!!!!
                     drawer.close()
                 }
             }
@@ -116,6 +114,7 @@ Page {
                 width: parent.width
                 onClicked: {
                     mainMenuStackView.push("Donate.qml")
+                    mainMenuStackView.currentItem.set_cards_model(clientUserData.cards);
                     drawer.close()
                 }
             }

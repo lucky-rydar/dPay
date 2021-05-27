@@ -15,5 +15,6 @@
         <file>CreateDonation.qml</file>
         <file>Donations.qml</file>
         <file>DonationData.qml</file>
+        <file>Donate.qml</file>
     </qresource>
 </RCC>
