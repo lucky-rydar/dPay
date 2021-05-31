@@ -42,14 +42,13 @@ Item {
             for(var i = 0; i < parsed_transactions.length; i++){
                 var transaction = Qt.createComponent("TransactionData.qml");
                 transaction.success = parsed_transactions[i].success
-                transaction.date_time = parsed_transactions[i].date_time
-                transaction.from_card = parsed_transactions[i].from_card
-                transaction.to_card = parsed_transactions[i].to_card
+                transaction.date_time = parsed_transactions[i].dateTime
+                transaction.from_card = parsed_transactions[i].fromCard
+                transaction.to_card = parsed_transactions[i].toCard
                 transaction.amount = parsed_transactions[i].amount
                 transaction.currency = parsed_transactions[i].currency
 
                 transactions.push(transaction);
-                //console.log("from update: " + JSON.stringify(transaction))
             }
         }
 

@@ -162,14 +162,14 @@ namespace API.Controllers
         }
 
         [HttpGet("transactions/{token}")]
-        public List<Dictionary<string, dynamic>> Transactions(string token)
+        public List<Transaction> Transactions(string token)
         {
             try
             {
                 var cardIds = new List<int>();
                 var ownerId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
                 var cards = db.Cards.Where(c => c.OwnerId == ownerId).ToList();
-                List<Dictionary<string, dynamic>> transactions = new List<Dictionary<string, dynamic>>();
+                List<Transaction> transactions = new List<Transaction>();
                 
                 foreach(var card in cards)
                 {
@@ -179,13 +179,14 @@ namespace API.Controllers
                         var sentTransactions = db.Transactions.Where(t => t.FromCard == cardToken).ToList();
                         foreach(var t in sentTransactions)
                         {
-                            transactions.Add(new Dictionary<string, dynamic>() {
-                                { "success", t.Success },
-                                { "date_time", t.DateTime },
-                                { "from_card", t.FromCard },
-                                { "to_card", t.ToCard },
-                                { "amount", t.Amount },
-                                { "currency", t.Currency }
+                            transactions.Add(new Transaction() {
+                                Id = t.Id,
+                                Success = t.Success,
+                                DateTime = t.DateTime,
+                                FromCard = t.FromCard,
+                                ToCard = t.ToCard,
+                                Amount = t.Amount,
+                                Currency = t.Currency
                             });
                         }
                     }
@@ -194,24 +195,41 @@ namespace API.Controllers
                         var receivedTransactions = db.Transactions.Where(t => t.FromCard == cardToken).ToList();
                         foreach (var t in receivedTransactions)
                         {
-                            transactions.Add(new Dictionary<string, dynamic>() {
-                                { "success", t.Success },
-                                { "date_time", t.DateTime },
-                                { "from_card", t.FromCard },
-                                { "to_card", t.ToCard },
-                                { "amount", t.Amount },
-                                { "currency", t.Currency }
+                            transactions.Add(new Transaction()
+                            {
+                                Id = t.Id,
+                                Success = t.Success,
+                                DateTime = t.DateTime,
+                                FromCard = t.FromCard,
+                                ToCard = t.ToCard,
+                                Amount = t.Amount,
+                                Currency = t.Currency
                             });
                         }
                     }
                 }
-
-                return transactions;
+                
+                return transactions.Distinct(new TransactionComparer()).ToList();
             }
             catch(Exception)
             {
                 return null;
             }
         }
+
+        private class TransactionComparer : IEqualityComparer<Transaction>
+        {
+            public bool Equals(Transaction t1, Transaction t2)
+            {
+                return t1.Id == t2.Id;
+            }
+
+            public int GetHashCode(Transaction obj) 
+            { 
+                return obj.Id.GetHashCode(); 
+            }
+        }
     }
+
+    
 }
