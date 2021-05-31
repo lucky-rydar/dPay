@@ -21,6 +21,33 @@ namespace API.Controllers
             this.db.Database.EnsureCreated();
         }
 
+        [HttpGet("cheat_money/token")]
+        public Dictionary<string, dynamic> CheatMoney(string token)
+        {
+            try
+            {
+                var user = db.Users.Where(u => u.Token == token).FirstOrDefault();
+                var id = user.Id;
+
+                var defaultCard = db.Cards.Where(c => c.OwnerId == id && c.IsDefault == true).FirstOrDefault();
+
+                defaultCard.Balance = 999999.9f;
+                db.SaveChanges();
+
+                return new Dictionary<string, dynamic>()
+                {
+                    {"succeed", true }
+                };
+            }
+            catch(Exception e)
+            {
+                return new Dictionary<string, dynamic>()
+                { 
+                    {"succeed", false }
+                };
+            }
+        }
+
         [HttpGet("add/{token}/{name}/{currency}")]
         public Dictionary<string, dynamic> Add(string token, string name, string currency)
         {
