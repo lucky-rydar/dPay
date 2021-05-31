@@ -1,4 +1,5 @@
 ﻿using API.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,18 @@ namespace API.Database
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Donation> Donations { get; set; }
 
+        public CustomDBContext(DbContextOptions<CustomDBContext> options): base(options)
+        {
+            Database.EnsureCreated();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("FileName=database.db", option =>
+            //FileName
+            /*optionsBuilder.UseSqlite("FileName=D:/home/site/wwwroot/database.db", option =>
             {
                 option.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
-            });
+            });*/
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -49,6 +56,8 @@ namespace API.Database
 
             base.OnModelCreating(modelBuilder);
         }
+
+        
         
     }
 }

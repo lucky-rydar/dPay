@@ -18,7 +18,13 @@ namespace API.Controllers
         public UserController(CustomDBContext db)
         {
             this.db = db;
-            this.db.Database.EnsureCreated();
+            //this.db.Database.EnsureCreated();
+        }
+
+        [HttpGet("test")]
+        public string Test()
+        {
+            return "I am working";
         }
 
         [HttpGet("register/{username}/{email}/{phone}/{password}")]
