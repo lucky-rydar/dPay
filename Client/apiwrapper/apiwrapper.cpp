@@ -2,8 +2,8 @@
 
 ApiWrapper::ApiWrapper(QObject *parent) : QObject(parent)
 {
-    baseUrl = "http://localhost:5000/api/"; // change on release
-    //baseUrl = "http://192.168.0.100w:5000/api/"; // change on release
+    //baseUrl = "http://localhost:5000/api/"; // change on release
+    baseUrl = "http://d-pay.tk/api/"; // change on release
 }
 
 QString ApiWrapper::registration(QString username, QString email, QString phone, QString password)
