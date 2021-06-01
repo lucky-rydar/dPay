@@ -170,45 +170,20 @@ namespace API.Controllers
                 var ownerId = db.Users.Where(u => u.Token == token).FirstOrDefault().Id;
                 var cards = db.Cards.Where(c => c.OwnerId == ownerId).ToList();
                 List<Transaction> transactions = new List<Transaction>();
-                
+
                 foreach(var card in cards)
                 {
                     var cardToken = card.CardToken;
-                    if(db.Transactions.Where(t=>t.FromCard == cardToken).Count() > 0)
-                    {
-                        var sentTransactions = db.Transactions.Where(t => t.FromCard == cardToken).ToList();
-                        foreach(var t in sentTransactions)
-                        {
-                            transactions.Add(new Transaction() {
-                                Id = t.Id,
-                                Success = t.Success,
-                                DateTime = t.DateTime,
-                                FromCard = t.FromCard,
-                                ToCard = t.ToCard,
-                                Amount = t.Amount,
-                                Currency = t.Currency
-                            });
-                        }
-                    }
-                    if (db.Transactions.Where(t => t.ToCard == cardToken).Count() > 0)
-                    {
-                        var receivedTransactions = db.Transactions.Where(t => t.FromCard == cardToken).ToList();
-                        foreach (var t in receivedTransactions)
-                        {
-                            transactions.Add(new Transaction()
-                            {
-                                Id = t.Id,
-                                Success = t.Success,
-                                DateTime = t.DateTime,
-                                FromCard = t.FromCard,
-                                ToCard = t.ToCard,
-                                Amount = t.Amount,
-                                Currency = t.Currency
-                            });
-                        }
-                    }
+                    
+                    var fromTransactions = db.Transactions.Where(t => t.FromCard == cardToken);
+                    if (fromTransactions != null)
+                        transactions.AddRange(fromTransactions);
+
+                    var toTransactions = db.Transactions.Where(t => t.ToCard == cardToken);
+                    if (toTransactions != null)
+                        transactions.AddRange(toTransactions);
                 }
-                
+
                 return transactions.Distinct(new TransactionComparer()).ToList();
             }
             catch(Exception)

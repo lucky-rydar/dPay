@@ -41,12 +41,15 @@ Item {
 
             for(var i = 0; i < parsed_transactions.length; i++){
                 var transaction = Qt.createComponent("TransactionData.qml");
-                transaction.success = parsed_transactions[i].success
-                transaction.date_time = parsed_transactions[i].dateTime
-                transaction.from_card = parsed_transactions[i].fromCard
-                transaction.to_card = parsed_transactions[i].toCard
-                transaction.amount = parsed_transactions[i].amount
-                transaction.currency = parsed_transactions[i].currency
+
+                let temp = JSON.parse(JSON.stringify(parsed_transactions[i]))
+
+                transaction.success = temp.success
+                transaction.date_time = temp.dateTime
+                transaction.from_card = temp.fromCard
+                transaction.to_card = temp.toCard
+                transaction.amount = temp.amount
+                transaction.currency = temp.currency
 
                 transactions.push(transaction);
             }
