@@ -79,7 +79,7 @@ Page {
                 if(toCardField.text != "" && amountField.text != ""){
                     api.send_by_card(clientUserData.token,
                                      chooseCard.currentText,
-                                     toCardField.text,
+                                     toCardField.text.toUpperCase(),
                                      amountField.text);
                     toCardField.clear()
                     amountField.clear()

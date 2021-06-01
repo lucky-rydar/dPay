@@ -122,11 +122,11 @@ Page {
         }
 
         onClicked: {
-            let res = api.donation_by_token(donationTokenField.text);
+            let res = api.donation_by_token(donationTokenField.text.toUpperCase());
             let parsed = JSON.parse(res);
 
             if(parsed.exists){
-                set_donation_data(parsed.title, parsed.description, donationTokenField.text);
+                set_donation_data(parsed.title, parsed.description, donationTokenField.text.toUpperCase());
 
                 foundDonationPayMenu.visible = true
             }

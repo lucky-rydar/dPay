@@ -73,6 +73,8 @@ Item {
 
         function clear(){
             cards = []
+            transactions = []
+            donations = []
             token = ""
             username = ""
             phone = ""
